@@ -2,13 +2,14 @@ node{
      	stage('SCM') {
            //git clone
          git 'https://github.com/openmrs/openmrs-core.git'
-       }
-      stage(‘Build package’) {
-         //Build maven package
-        sh label: '', script: 'mvn package'
       }
-     stage(‘Archive’) {
+      stage('Build package') {
+         //Build maven package
+        sh 'mvn package'
+      }
+     stage('Archive') {
        // Archiving artifacts.
-       archiveArtifacts 'target/*.jar'  
+       archiveArtifacts 'target/*.jar'
+       junit 'target/surefire-reports/*.xml'
      }
 }
